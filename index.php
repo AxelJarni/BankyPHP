@@ -1,50 +1,46 @@
-<!doctype html>
-<html class="no-js" lang="">
+<?php 
+  session_start();
+  if(!isset($_SESSION["user"])) {
+      header("Location:login.php");
+      exit;
+  }
 
-<head>
-  <meta charset="utf-8">
-  <title></title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  try {
+    $db = new PDO('mysql:host=localhost;dbname=banque_php', 'root', '');
+  } 
+  catch (Exception $e) {
+    echo $e->getMessage();
+    exit;
+  }
+  
+  require "model/accountsModel.php";
+  include "layout/header.php"; 
+  $accounts = get_accounts($db, $_SESSION["user"]);
+  var_dump($accounts);
+?>
 
-  <meta property="og:title" content="">
-  <meta property="og:type" content="">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
+<h2>Vos comptes en banque</h2>
+<div class="row mt-5">
+  <?php foreach ($accounts as $account): ?>
+  <div class='col-6 col-md-4'>
+    <article class="card">
+      <div class="card-header">
+        <h6 class="card-subtitle my-2 text-muted">Votre numéro de compte : <?php echo $account["id"]; ?></h6>
+        <h5 class="card-title"><?php echo $account["account_type"]; ?></h5>
+      </div>
+      <div class="card-body">
+        <ul class="list-group border-bottom my-2">
+          <li class="list-group-item">Détenteur du compte : <?php echo $_SESSION["user"]["firstname"] . " " . $_SESSION["user"]["lastname"]; ?></li>
+          <li class="list-group-item">Solde : <?php echo $account["amount"]; ?></li>
+        </ul>
+        <a href="#" class="btn btn-warning">Dépot/retrait</a>
+        <a href="single.php?id=<?php echo $account['id']; ?>" class="btn btn-primary">Voir</a>
+      </div>
+    </article>
+  </div>
+<?php endforeach; ?>
 
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="apple-touch-icon" href="icon.png">
-  <!-- Place favicon.ico in the root directory -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
-
-  <meta name="theme-color" content="#fafafa">
-</head>
-
-<body>
-
-<?php include("comp/nav.php"); ?>
-<?php include("comp/header.php"); ?>
-<?php include("comp/main.php"); ?>
-<?php include("comp/footer.php"); ?>
-
-
-
+</div>
 
 
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
-  <script src="js/vendor/modernizr-3.11.2.min.js"></script>
-  <script src="js/plugins.js"></script>
-  <script src="js/main.js"></script>
-
-  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-  <script>
-    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
-  </script>
-  <script src="https://www.google-analytics.com/analytics.js" async></script>
-</body>
-
-</html>
+<?php include "layout/footer.php"; ?>
