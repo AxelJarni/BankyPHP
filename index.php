@@ -33,14 +33,28 @@
           <li class="list-group-item">Détenteur du compte : <?php echo $_SESSION["user"]["firstname"] . " " . $_SESSION["user"]["lastname"]; ?></li>
           <li class="list-group-item">Solde : <?php echo $account["amount"]; ?></li>
         </ul>
-        <a href="#" class="btn btn-warning">Dépot/retrait</a>
-        <a href="single.php?id=<?php echo $account['id']; ?>" class="btn btn-primary">Voir</a>
+        <div class="col text-center">
+        <a href="single.php?id=<?php echo $account['id']; ?>" class="btn btn-primary text-center">Détails du compte</a>
+        </div>
       </div>
     </article>
   </div>
-<?php endforeach; ?>
+  <?php endforeach; ?>
 
 </div>
+
+<h5> Créer un nouveau compte</h5>
+<form action="insert.php" method="post">             
+  <p>
+    <label for="amount">Montant</label>
+    <input type="number"  name="amount" id="amount" step="0.01" pattern="^\d+(?:\.\d{1,2})?$">
+  </p>
+  <p>
+    <label for="account_type">Nom du compte</label>
+    <input type="text" name="account_type" id="account_type">
+  </p>
+  <input type="submit" value="Submit">
+</form>
 
 
 <?php include "layout/footer.php"; ?>

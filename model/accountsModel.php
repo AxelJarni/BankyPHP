@@ -12,5 +12,15 @@ function get_accounts(PDO $db, $user) {
     return $result;
 }
 
-
+function get_operations (PDO $db, $account_id) {
+    $query = $db->prepare(
+        "SELECT * 
+        FROM operation 
+        WHERE account_id=:account_id");
+    $query->execute([
+        'account_id' => $account_id
+    ]);
+    $result = $query->fetchall(PDO::FETCH_ASSOC);
+    return $result;
+}
 ?>
