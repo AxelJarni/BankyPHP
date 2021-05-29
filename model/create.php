@@ -6,7 +6,6 @@ function create_account(PDO $db, $user, $amount, $account_type) {
         VALUES (:amount, NOW(), :account_type, :user_id)");
     $query->execute([
         'amount' => $amount,
-        // 'opening_date' => NOW(),
         'account_type' => $account_type,
         'user_id' => $user['id']
     ]);

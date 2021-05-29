@@ -53,19 +53,20 @@ var_dump($operations);
 <form action="insertoperation.php" method="post">     
     <p>
         <label for="operation_type">Type d'opération</label>
-        <select size="2"  name="operation_type" id="operation_type">
+        <select size="2"  name="operation_type" id="operation_type" required="required" >
                 <option value='credit'>Crédit</option>
                 <option value='debit'>Débit</option>
         </select>
     </p>        
     <p>
         <label for="amount">Montant</label>
-        <input type="number"  name="amount" id="amount" step="0.01" pattern="^\d+(?:\.\d{1,2})?$">
+        <input type="number"  name="amount" id="amount" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" required="required" >
     </p>
     <p>
         <label for="label">Libellé de l'opération</label>
-        <input type="text" name="label" id="label">
+        <input type="text" name="label" id="label" required="required">
     </p>
+    <input type="hidden" id="account_id" name="account_id" value="<?php echo $_GET['id'] ?>">
     <input type="submit" value="Submit">
 </form>
 

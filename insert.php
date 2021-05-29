@@ -4,7 +4,7 @@
       header("Location:login.php");
       exit;
   }
-
+  header( "refresh:3;url=index.php" );
   try {
     $db = new PDO('mysql:host=localhost;dbname=banque_php', 'root', '');
   } 
@@ -14,8 +14,8 @@
   }
   include "layout/header.php";
   require "model/create.php";
-  $amount = $_REQUEST['amount'];
-  $account_type = $_REQUEST['account_type'];
+  $amount = $_POST['amount'];
+  $account_type = $_POST['account_type'];
   create_account($db, $_SESSION["user"], $amount, $account_type); 
 ?>
 
