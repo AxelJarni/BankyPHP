@@ -16,11 +16,11 @@
   require "model/accountsModel.php";
   include "layout/header.php"; 
   $accounts = get_accounts($db, $_SESSION["user"]);
-  var_dump($accounts);
+  // var_dump($accounts);
 ?>
 
 <h2>Vos comptes en banque</h2>
-<div class="row mt-5">
+<div class="row my-5">
   <?php foreach ($accounts as $account): ?>
   <div class='col-6 col-md-4'>
     <article class="card">
@@ -43,17 +43,17 @@
 
 </div>
 
-<h5> Créer un nouveau compte</h5>
-<form action="insert.php" method="post">             
-  <p>
+<h3> Créer un nouveau compte</h3>
+<form action="insert.php" method="post" class="col-4">             
+  <div class="form-group">
     <label for="amount">Montant</label>
-    <input type="number"  name="amount" id="amount" step="0.01" pattern="^\d+(?:\.\d{1,2})?$">
-  </p>
-  <p>
+    <input type="number"  name="amount" id="amount" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" class="form-control my-2">
+  </div>
+  <div class="form-group">
     <label for="account_type">Nom du compte</label>
-    <input type="text" name="account_type" id="account_type">
-  </p>
-  <input type="submit" value="Submit">
+    <input type="text" name="account_type" id="account_type" class="form-control my-2">
+  </div>
+  <input type="submit" class="btn btn-primary my-2" value="Submit">
 </form>
 
 

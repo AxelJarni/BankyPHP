@@ -18,11 +18,13 @@ include "layout/header.php";
 
 
 $account_id = $_GET["id"];
-var_dump($account_id);
+// var_dump($account_id);
 $operations = get_operations($db, $account_id);
-var_dump($operations);
+// var_dump($operations);
 ?>
-
+<div class="mb-5">
+    <button onclick="location.href='index.php'" class="btn btn-warning">Retourner à l'accueil</button>
+</div>
 <h3>Votre compte en détail : </h3>
     <div class="row my-3">
       <div>
@@ -49,25 +51,25 @@ var_dump($operations);
       </div>
     </div>
 
-<h5>Ajouter une nouvelle opération</h5>
-<form action="insertoperation.php" method="post">     
-    <p>
-        <label for="operation_type">Type d'opération</label>
-        <select size="2"  name="operation_type" id="operation_type" required="required" >
-                <option value='credit'>Crédit</option>
-                <option value='debit'>Débit</option>
-        </select>
-    </p>        
-    <p>
-        <label for="amount">Montant</label>
-        <input type="number"  name="amount" id="amount" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" required="required" >
-    </p>
-    <p>
-        <label for="label">Libellé de l'opération</label>
-        <input type="text" name="label" id="label" required="required">
-    </p>
-    <input type="hidden" id="account_id" name="account_id" value="<?php echo $_GET['id'] ?>">
-    <input type="submit" value="Submit">
+<h3>Ajouter une nouvelle opération</h3>
+<form action="insertoperation.php" method="post" class="col-4">     
+  <div class="form-group">
+      <label for="operation_type">Type d'opération</label>
+      <select  name="operation_type" id="operation_type" required="required" class="form-control custom-select my-2">
+        <option value='credit'>Crédit</option>
+        <option value='debit'>Débit</option>
+      </select>
+  </div>        
+  <div class="form-group">
+      <label for="amount">Montant</label>
+      <input type="number"  name="amount" id="amount" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" required="required" class="form-control my-2">
+  </div>
+  <div class="form-group">
+      <label for="label">Libellé de l'opération</label>
+      <input type="text" name="label" id="label" required="required" class="form-control my-2">
+  </div>
+  <input type="hidden" id="account_id" name="account_id" value="<?php echo $_GET['id'] ?>">
+  <input type="submit" value="Submit" class="btn btn-primary my-2">
 </form>
 
 <?php include "layout/footer.php"; ?>
