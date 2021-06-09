@@ -1,7 +1,7 @@
 <?php 
 
 function getUserByEmail(PDO $db, string $email) {
-    $query = $db->prepare("SELECT * FROM BankUser WHERE email=:email");
+    $query = $db->prepare("SELECT * FROM User WHERE email=:email");
     $query->execute([
         'email' => $email
     ]);

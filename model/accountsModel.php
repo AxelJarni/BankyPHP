@@ -12,13 +12,14 @@ function get_accounts(PDO $db, $user) {
     return $result;
 }
 
-function get_operations (PDO $db, $account_id) {
+function create_account(PDO $db, $user, $amount, $account_type) {
     $query = $db->prepare(
-        "SELECT * 
-        FROM operation 
-        WHERE account_id=:account_id");
+        "INSERT INTO account (amount, opening_date, account_type, user_id)
+        VALUES (:amount, NOW(), :account_type, :user_id)");
     $query->execute([
-        'account_id' => $account_id
+        'amount' => $amount,
+        'account_type' => $account_type,
+        'user_id' => $user['id']
     ]);
     $result = $query->fetchall(PDO::FETCH_ASSOC);
     return $result;

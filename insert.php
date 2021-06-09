@@ -12,15 +12,9 @@
     echo $e->getMessage();
     exit;
   }
-  include "layout/header.php";
-  require "model/create.php";
+  require "model/accountsModel.php";
   $amount = $_POST['amount'];
   $account_type = $_POST['account_type'];
   create_account($db, $_SESSION["user"], $amount, $account_type); 
-?>
 
-<h2>Compte crée !</h2>
-
-
-
-<?php include "layout/footer.php"; ?>
+  require "view/insertAccountView.php";
