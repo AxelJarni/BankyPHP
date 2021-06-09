@@ -5,13 +5,8 @@ if(!isset($_SESSION["user"])) {
     exit;
 }
 
-try {
-  $db = new PDO('mysql:host=localhost;dbname=banque_php', 'root', '');
-} 
-catch (Exception $e) {
-  echo $e->getMessage();
-  exit;
-}
+require "model/connection.php";
+    $db = DataBase::getDB();
 
 require "model/accountsModel.php";
 require "model/operationsModel.php";

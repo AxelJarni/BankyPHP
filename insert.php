@@ -5,13 +5,8 @@
       exit;
   }
   header( "refresh:3;url=index.php" );
-  try {
-    $db = new PDO('mysql:host=localhost;dbname=banque_php', 'root', '');
-  } 
-  catch (Exception $e) {
-    echo $e->getMessage();
-    exit;
-  }
+  require "model/connection.php";
+    $db = DataBase::getDB();
   require "model/accountsModel.php";
   $amount = $_POST['amount'];
   $account_type = $_POST['account_type'];

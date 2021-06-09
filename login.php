@@ -1,16 +1,12 @@
 <?php
-    require "model/userModel.php";
+    require "model/user.php";
 
-    try {
-        $db = new PDO('mysql:host=localhost;dbname=banque_php', 'root', '');
-    } catch (Exception $e) {
-        echo $e->getMessage();
-        exit;
-    }
+    require "model/connection.php";
+    $db = DataBase::getDB();
 
     // Si les champ nom et mot de passe ont été remplis
     if(isset($_POST["email"]) && isset($_POST["password"])) {
-        $user = getUserByEmail($db, $_POST["email"]);
+        $user = User::getUserByEmail($db, $_POST["email"]);
         // Si la base de données à renvoyé un utilisateur avec ce mail
         if($user) {
             // On vérifie le mot de passe
