@@ -13,10 +13,20 @@
     exit;
   }
   require "model/operationsModel.php";
-  $account_id = $_POST['account_id'];
-  $operation_type = $_POST['operation_type'];
-  $amount = $_POST['amount'];
-  $label = $_POST['label'];
-  create_operation($db, $operation_type, $amount, $label,  $account_id); 
+  require "model/accountsModel.php";
+
+  $account = get_only_account($db, $_POST["account_id"], $_SESSION["user"]);
   // header( "refresh:3;url=single.php?id=$account_id" );
+
+  if($_POST["operation_type"] === "debit") {
+    $account["amount"] = floatval($account["amount"]) - floatval($_POST["amount"]);
+    $_POST["amount"] = "-" . $_POST["amount"];
+  }
+  else {
+    $account["amount"] = floatval($account["amount"]) + floatval($_POST["amount"]);
+  }
+  create_operation($db, $_POST);
+  update_account_amount($db, $account);
+  
+
 require "view/insertOperationView.php";

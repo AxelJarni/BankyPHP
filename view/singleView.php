@@ -1,6 +1,6 @@
 <?php
 include "layout/header.php";
-
+if(!isset($error)):
 ?>
 
 <div class="mb-5">
@@ -24,7 +24,7 @@ include "layout/header.php";
                 <td><?php echo $operation["label"]; ?></td>
                 <td><?php echo $operation["registered"]; ?></td>
                 <td><?php echo $operation["operation_type"]; ?></td>
-                <td><?php echo $operation["amount"]; ?></td>
+                <td><?php echo $operation["operation_amount"]; ?></td>
               </tr>
             <?php endforeach; ?>
           </tbody>
@@ -52,5 +52,11 @@ include "layout/header.php";
   <input type="hidden" id="account_id" name="account_id" value="<?php echo $_GET['id'] ?>">
   <input type="submit" value="Submit" class="btn btn-primary my-2">
 </form>
+
+<?php else: ?>
+  <div class="alert alert-danger">
+    <p><?php echo $error ?></p>
+  </div>
+<?php endif; ?>
 
 <?php include "layout/footer.php"; ?>
