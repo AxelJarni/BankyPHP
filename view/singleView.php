@@ -21,15 +21,21 @@ if(!isset($error)):
           <tbody>
             <?php foreach($operations as $operation) : ?>
               <tr>
-                <td><?php echo $operation["label"]; ?></td>
-                <td><?php echo $operation["registered"]; ?></td>
-                <td><?php echo $operation["operation_type"]; ?></td>
-                <td><?php echo $operation["operation_amount"]; ?></td>
+                <td><?php echo $operation->getLabel(); ?></td>
+                <td><?php echo $operation->getRegistered(); ?></td>
+                <td><?php echo $operation->getOperation_type(); ?></td>
+                <td><?php echo $operation->getOperation_amount(); ?></td>
               </tr>
             <?php endforeach; ?>
           </tbody>
         </table>
       </div>
+    </div>
+    <div>
+      <form method="POST" action="deleteaccount.php">
+        <input type="hidden" name="account_id" value="<?php echo $_GET['id']; ?>">
+        <input type="submit" name="deleteaccount" value="Supprimer le compte" class="btn btn-danger">
+      </form>
     </div>
 
 <h3>Ajouter une nouvelle opération</h3>

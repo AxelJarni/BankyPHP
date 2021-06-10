@@ -8,19 +8,25 @@ if(!isset($_SESSION["user"])) {
 require "model/connection.php";
     $db = DataBase::getDB();
 
-require "model/accountsModel.php";
-require "model/operationsModel.php";
+require "model/accountsManager.php";
+require "model/operationsManager.php";
+require_once "model/entity/operation.php";
 
 $id = $_GET["id"];
-$operations = get_operations($db, $id);
+// $operationsModel = new operationsManager();
+// $operations = get_operations($db, $id);
 
 if (empty($_GET) || !isset($_GET["id"])) {
   header("Location: index.php");
 }
 $id = filter_var($_GET["id"], FILTER_SANITIZE_NUMBER_INT);
-$operations = get_single_account($db, $id);
-$account = $operations[0];
-if(!$account || ($account["user_id"] !== $_SESSION["user"]["id"])) {
+// $accountsModel = new AccountManager();
+// $operations = $accountsModel->get_single_account($db, $id);
+$operationsMan = new OperationsManager();
+// $operations = $operationsModel->get_operations($db, $id);
+// var_dump($operations);
+$operations = $operationsMan->get_operations($db, $id);
+if(!$operations ) {
   $error ="Nous avons rencontré un problème, veuillez retourner à l'accueil.";
 }
 

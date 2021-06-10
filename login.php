@@ -18,7 +18,7 @@
                 // var_dump("CA PASSE");
                 exit;
             }
-            // var_dump("CA PASSE2");
+            // var_dump($user);
         }
         $error_message = "Identifiants invalides";
         // var_dump($_POST["email"]);

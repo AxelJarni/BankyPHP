@@ -1,6 +1,7 @@
 <?php
 
-function get_accounts(PDO $db, $user) {
+class AccountManager {
+  function get_accounts(PDO $db, $user) {
     $query = $db->prepare(
         "SELECT account.id, account.amount, account.account_type 
         FROM account 
@@ -10,9 +11,9 @@ function get_accounts(PDO $db, $user) {
     ]);
     $result = $query->fetchall(PDO::FETCH_ASSOC);
     return $result;
-}
+  }
 
-function create_account(PDO $db, $user, $amount, $account_type) {
+  function create_account(PDO $db, $user, $amount, $account_type) {
     $query = $db->prepare(
         "INSERT INTO account (amount, opening_date, account_type, user_id)
         VALUES (:amount, NOW(), :account_type, :user_id)");
@@ -23,9 +24,9 @@ function create_account(PDO $db, $user, $amount, $account_type) {
     ]);
     $result = $query->fetchall(PDO::FETCH_ASSOC);
     return $result;
-}
+  }
 
-function get_single_account($db, $id) {
+  function get_single_account($db, $id) {
     $query = $db->prepare(
       "SELECT a.*, o.id AS operation_id, o.operation_type, o.amount AS operation_amount, o.label, o.registered FROM Account AS a
        LEFT JOIN Operation AS o
@@ -39,7 +40,7 @@ function get_single_account($db, $id) {
     return $query->fetchAll(PDO::FETCH_ASSOC);
   }
   
-function get_only_account($db, $id, $user) {
+  function get_only_account($db, $id, $user) {
     $query = $db->prepare(
       "SELECT id, amount FROM Account
        WHERE id = :id
@@ -52,7 +53,7 @@ function get_only_account($db, $id, $user) {
     return $query->fetch(PDO::FETCH_ASSOC);
   }
 
-function update_account_amount($db, $account) {
+  function update_account_amount($db, $account) {
     $query = $db->prepare(
       "UPDATE Account
       SET amount = :amount
@@ -64,4 +65,20 @@ function update_account_amount($db, $account) {
     ]);
     return $result;
   }
+
+  function deleteAccount($db, $account_id, $user) {
+    $query = $db->prepare(
+      "DELETE FROM Account
+      WHERE id = :id
+      AND user_id = :user_id"
+    );
+    $result = $query->execute([
+      "id" => $account_id,
+      "user_id" => $user["id"]
+    ]);
+    return $result;
+  }
+
+}
+
 ?>
