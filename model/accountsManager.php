@@ -1,7 +1,7 @@
 <?php
 
 class AccountManager {
-  function get_accounts(PDO $db, $user) {
+  public function get_accounts(PDO $db, $user) {
     $query = $db->prepare(
         "SELECT account.id, account.amount, account.account_type 
         FROM account 
@@ -13,7 +13,7 @@ class AccountManager {
     return $result;
   }
 
-  function create_account(PDO $db, $user, $amount, $account_type) {
+  public function create_account(PDO $db, $user, $amount, $account_type) {
     $query = $db->prepare(
         "INSERT INTO account (amount, opening_date, account_type, user_id)
         VALUES (:amount, NOW(), :account_type, :user_id)");
@@ -26,7 +26,7 @@ class AccountManager {
     return $result;
   }
 
-  function get_single_account($db, $id) {
+  public function get_single_account($db, $id) {
     $query = $db->prepare(
       "SELECT a.*, o.id AS operation_id, o.operation_type, o.amount AS operation_amount, o.label, o.registered FROM Account AS a
        LEFT JOIN Operation AS o
@@ -40,7 +40,7 @@ class AccountManager {
     return $query->fetchAll(PDO::FETCH_ASSOC);
   }
   
-  function get_only_account($db, $id, $user) {
+  public function get_only_account($db, $id, $user) {
     $query = $db->prepare(
       "SELECT id, amount FROM Account
        WHERE id = :id
@@ -53,7 +53,7 @@ class AccountManager {
     return $query->fetch(PDO::FETCH_ASSOC);
   }
 
-  function update_account_amount($db, $account) {
+  public function update_account_amount($db, $account) {
     $query = $db->prepare(
       "UPDATE Account
       SET amount = :amount
@@ -66,7 +66,7 @@ class AccountManager {
     return $result;
   }
 
-  function deleteAccount($db, $account_id, $user) {
+  public function deleteAccount($db, $account_id, $user) {
     $query = $db->prepare(
       "DELETE FROM Account
       WHERE id = :id

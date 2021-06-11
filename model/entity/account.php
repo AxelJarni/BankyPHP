@@ -56,7 +56,7 @@ class Account {
         }
     }
 
-    function __construct(?array $data = null) {
+    public function __construct(?array $data = null) {
         if($data) {
             $this->hydrate($data);
         }
